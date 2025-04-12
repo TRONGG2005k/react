@@ -10,6 +10,14 @@ const LoginForm = () => {
 
     const handleLogin = async () => {
         try {
+            // const response = await fetch('http://localhost:8080/auth/login', {
+            //     method: 'POST',
+            //     credentials: 'include',
+            //     headers: {
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({ userName, password })
+            // });
             const response = await fetch('https://login-4-llw0.onrender.com/auth/login', {
                 method: 'POST',
                 credentials: 'include',

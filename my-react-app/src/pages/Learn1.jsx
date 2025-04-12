@@ -10,6 +10,8 @@ const Learn1 = () => {
         const fetchUserInfo = async () => {
             try {
                 const res = await authFetch('https://login-4-llw0.onrender.com/api/users/myInfo');
+
+                // const res = await authFetch('http://localhost:8080/api/users/myInfo');
                 if (res.ok) {
                     const data = await res.json();
                     setUserInfo(data);

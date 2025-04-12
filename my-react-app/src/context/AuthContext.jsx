@@ -14,6 +14,10 @@ export const AuthProvider = ({ children }) => {
                 method: 'POST',
                 credentials: 'include',
             });
+            // const res = await fetch('http://localhost:8080/auth/refresh-token', {
+            //     method: 'POST',
+            //     credentials: 'include',
+            // });
             const data = await res.json();
             if (data?.data?.accessToken) {
                 localStorage.setItem('accessToken', data.data.accessToken);
