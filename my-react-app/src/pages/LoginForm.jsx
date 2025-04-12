@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';  // import context
 
 const LoginForm = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { setIsAuthenticated } = useContext(AuthContext); // Lấy setIsAuthenticated từ context
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://localhost:8080/auth/login', {
+            const response = await fetch('https://login-4-llw0.onrender.com/auth/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -20,12 +22,17 @@ const LoginForm = () => {
             const data = await response.json();
             console.log(data);
 
-            if (data.data?.accessToken) {
-                // console.log(data.data.accessToken);
-                
+            if (data.data.accessToken) {
+                console.log(data.data.accessToken);
                 localStorage.setItem('accessToken', data.data.accessToken);
                 alert('Login thành công');
-                navigate('/learn1'); // dùng React Router để chuyển trang
+
+                // Cập nhật isAuthenticated ngay lập tức
+                setIsAuthenticated(true);
+
+                setTimeout(() => {
+                    navigate('/learn1');
+                }, 100); // Chờ một chút để tránh vấn đề với alert()
             } else {
                 alert('Sai tài khoản hoặc mật khẩu');
             }
@@ -37,10 +44,10 @@ const LoginForm = () => {
     return (
         <div
             style={{
-                display:"flex",
-                justifyContent:"center",
-                alignItems:"center",
-                flexDirection:"column"
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column"
             }}
         >
             <h2>Đăng nhập</h2>
